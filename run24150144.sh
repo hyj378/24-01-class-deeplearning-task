@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=1 python test24150144.py --output_dir exps/r50_deformable_detr

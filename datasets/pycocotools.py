@@ -1,6 +1,7 @@
 __author__ = 'tylin'
 __version__ = '2.0'
 
+from tqdm import tqdm
 import json
 import time
 import matplotlib.pyplot as plt
@@ -128,7 +129,9 @@ class COCO:
                         if incremental_val:
                             this_phase_labaled_img_id_list = []
                             print('creating annotation dict...')
+                            import pdb;pdb.set_trace()
                             for ann in self.dataset['annotations']:
+                                print(ann) # added by 24150144 for checking the code
                                 if ann['category_id'] in selected_cls_this_phase:
                                     imgToAnns[ann['image_id']].append(ann)
                                     this_phase_labaled_img_id_list.append(ann['image_id'])
@@ -151,6 +154,7 @@ class COCO:
 
                             this_phase_labaled_img_id_list = []
                             print('creating annotation dict...')
+                            import pdb;pdb.set_trace()
                             for ann in self.dataset['annotations']:
                                 if ann['image_id'] in this_phase_img_id_list:
                                     if ann['category_id'] in selected_cls_this_phase:
@@ -262,6 +266,7 @@ class COCO:
                     if incremental_val:
                         this_phase_labaled_img_id_list = []
                         print('creating annotation dict...')
+                        import pdb;pdb.set_trace()
                         for ann in self.dataset['annotations']:
                             if ann['category_id'] in selected_cls_this_phase:
                                 imgToAnns[ann['image_id']].append(ann)
@@ -289,7 +294,7 @@ class COCO:
 
                         this_phase_labaled_img_id_list = []
                         print('creating annotation dict...')
-                        for ann in self.dataset['annotations']:
+                        for ann in tqdm(self.dataset['annotations']):
                             if ann['image_id'] in this_phase_img_id_list:
                                 this_phase_labaled_img_id_list.append(ann['image_id'])
                             if ann['category_id'] in selected_cls_this_phase:
