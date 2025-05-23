@@ -206,29 +206,6 @@ def main(args):
         for n, p in model_without_ddp.named_parameters():
             print(n)
 
-        param_dicts = [
-            {
-                "params":
-                    [p for n, p in model_without_ddp.named_parameters()
-                    if not match_name_keywords(n, args.lr_backbone_names) and not match_name_keywords(n, args.lr_linear_proj_names) and p.requires_grad],
-                "lr": args.lr,
-            },
-            {
-                "params": [p for n, p in model_without_ddp.named_parameters() if match_name_keywords(n, args.lr_backbone_names) and p.requires_grad],
-                "lr": args.lr_backbone,
-            },
-            {
-                "params": [p for n, p in model_without_ddp.named_parameters() if match_name_keywords(n, args.lr_linear_proj_names) and p.requires_grad],
-                "lr": args.lr * args.lr_linear_proj_mult,
-            }
-        ]
-
-        
-        print('pytorch model distributed...')
-        if args.distributed:
-            model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
-            model_without_ddp = model.module
-
         base_ds = get_coco_api_from_dataset(dataset_val)
         if phase_idx >= 1:
             base_ds_old = get_coco_api_from_dataset(dataset_val_old)
@@ -239,13 +216,10 @@ def main(args):
             model_without_ddp.detr.load_state_dict(checkpoint['model'])
 
         this_phase_output_dir = args.output_dir + '/phase_'+str(phase_idx)
-        output_dir = Path(this_phase_output_dir)
         Path(this_phase_output_dir).mkdir(parents=True, exist_ok=True)
 
         print("start training")
         start_time = time.time()
-
-        epoch = 0
 
         if phase_idx==0:
 
@@ -266,8 +240,6 @@ def main(args):
             )        
         else:
             if phase_idx >= 1:
-                old_model = copy.deepcopy(model)
-
                 ckpt_path = '/data6/workspace/yjhwang/r50_deformable_detr/70+10/phase_1/phase_1.pth'
                 checkpoint = torch.load(ckpt_path, map_location='cpu')
                 missing_keys, unexpected_keys = model_without_ddp.load_state_dict(checkpoint['model'], strict=False)

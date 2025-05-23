@@ -249,6 +249,7 @@ def evaluate(self):
     self._paramsEval = copy.deepcopy(self.params)
     # toc = time.time()
     # print('DONE (t={:0.2f}s).'.format(toc-tic))
+    
     return p.imgIds, evalImgs
 
 #################################################################
