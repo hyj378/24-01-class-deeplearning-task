@@ -1,0 +1,4 @@
+# ninja log v5
+0	5786	1747982873172452247	/home/yjhwang/workspace/CL-DETR/models/ops/build/temp.linux-x86_64-cpython-37/home/yjhwang/workspace/CL-DETR/models/ops/src/cpu/ms_deform_attn_cpu.o	811486acba04923c
+1	21792	1747982889184452832	/home/yjhwang/workspace/CL-DETR/models/ops/build/temp.linux-x86_64-cpython-37/home/yjhwang/workspace/CL-DETR/models/ops/src/cuda/ms_deform_attn_cuda.o	2c130e611d58986c
+1	22881	1747982890264452872	/home/yjhwang/workspace/CL-DETR/models/ops/build/temp.linux-x86_64-cpython-37/home/yjhwang/workspace/CL-DETR/models/ops/src/vision.o	21155b2cf0d46bae
